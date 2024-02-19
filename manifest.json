@@ -1,7 +1,7 @@
 {
   "name": "Daily Line",
   "short_name": "Daily Line",
-  "start_url": "/index.html",
+  "start_url": "/kva-DailyLine/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4A90E2",
