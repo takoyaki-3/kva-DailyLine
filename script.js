@@ -1,7 +1,7 @@
 const API_ENDPOINT = 'https://kva-store.api.takoyaki3.com';
 
 const add = async () => {
-  const key = document.getElementById('key').value;
+  const key = 'privateKey-' + loggedInUser.email + '@' + document.getElementById('key').value;
   const data = await encrypt(document.getElementById('add-data').value);
   document.getElementById('add-data').value = '';
 
@@ -34,7 +34,7 @@ document.getElementById('add-button').addEventListener('click',async function() 
 
 document.getElementById('get-button').addEventListener('click', async function() {
   try {
-    const key = document.getElementById('key').value;
+    const key = 'privateKey-' + loggedInUser.email + '@' + document.getElementById('key').value;
     const response = await fetch(`${API_ENDPOINT}/?key=${key}`, {
         method: 'GET',
         headers: {
@@ -58,7 +58,7 @@ document.getElementById('get-button').addEventListener('click', async function()
 
 // document.getElementById('delete-button').addEventListener('click',async function() {
 //   try {
-//     const key = document.getElementById('key').value;
+//     const key = 'privateKey-' + loggedInUser.email + '@' + document.getElementById('key').value;
 //     const response = await fetch(API_ENDPOINT, {
 //         method: 'DELETE',
 //         headers: {
