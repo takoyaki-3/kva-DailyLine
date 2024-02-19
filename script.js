@@ -29,7 +29,7 @@ const add = async () => {
 };
 
 document.getElementById('add-button').addEventListener('click',async function() {
-  await add(key, data);
+  await add();
 });
 
 document.getElementById('get-button').addEventListener('click', async function() {
