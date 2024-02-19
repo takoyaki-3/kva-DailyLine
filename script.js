@@ -1,9 +1,11 @@
 const API_ENDPOINT = 'https://kva-store.api.takoyaki3.com';
 
-document.getElementById('add-button').addEventListener('click',async function() {
+const add = async () => {
+  const key = document.getElementById('key').value;
+  const data = await encrypt(document.getElementById('add-data').value);
+  document.getElementById('add-data').value = '';
+
   try {
-    const key = document.getElementById('add-key').value;
-    const data = await encrypt(document.getElementById('add-data').value);
     const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -14,15 +16,25 @@ document.getElementById('add-button').addEventListener('click',async function() 
     })
     const respData = await response.json();
     console.log('Success:', respData);
-    alert('Line added successfully');
-  } catch(error) {
+
+    // add to display
+    const dataDisplay = document.getElementById('data-display');
+    const itmeElement = document.createElement('div');
+    itmeElement.textContent = await decrypt(data);
+    // add itemElement to top of dataDisplay
+    dataDisplay.insertBefore(itmeElement, dataDisplay.firstChild);
+} catch(error) {
     console.error('Error:', error);
   };
+};
+
+document.getElementById('add-button').addEventListener('click',async function() {
+  await add(key, data);
 });
 
 document.getElementById('get-button').addEventListener('click', async function() {
   try {
-    const key = document.getElementById('get-key').value;
+    const key = document.getElementById('key').value;
     const response = await fetch(`${API_ENDPOINT}/?key=${key}`, {
         method: 'GET',
         headers: {
@@ -44,21 +56,28 @@ document.getElementById('get-button').addEventListener('click', async function()
   };
 });
 
-document.getElementById('delete-button').addEventListener('click',async function() {
-  try {
-    const key = document.getElementById('delete-key').value;
-    const response = await fetch(API_ENDPOINT, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authIdToken}` // Update with actual token retrieval method
-        },
-        body: JSON.stringify({ key })
-    })
-    const data = await response.json();
-    console.log('Success:', data);
-    alert('Line deleted successfully');
-  } catch(error) {
-    console.error('Error:', error);
-  };
+// document.getElementById('delete-button').addEventListener('click',async function() {
+//   try {
+//     const key = document.getElementById('key').value;
+//     const response = await fetch(API_ENDPOINT, {
+//         method: 'DELETE',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Bearer ${authIdToken}` // Update with actual token retrieval method
+//         },
+//         body: JSON.stringify({ key })
+//     })
+//     const data = await response.json();
+//     console.log('Success:', data);
+//     alert('Line deleted successfully');
+//   } catch(error) {
+//     console.error('Error:', error);
+//   };
+// });
+
+document.addEventListener('keydown', function(event) {
+  // Enter key
+  if (event.keyCode === 13) {
+    add();
+  }
 });
