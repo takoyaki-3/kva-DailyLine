@@ -115,8 +115,10 @@ function getDateInSelectedTimezone(timestamp) {
   const selectedTimezone = localStorage.getItem('selectedTimezone') || 'UTC';
   // convert timestamp to selected timezone
   const currentDate = moment(timestamp).tz(selectedTimezone);
+  const dayOfWeek = currentDate.format('dddd');
   // return date in the format of YYYY-MM-DD
-  return currentDate.format('YYYY-MM-DD');
+  const date = currentDate.format('YYYY-MM-DD');
+  return `${date} ${dayOfWeek}`;
 }
 
 function groupDataByDate(data) {

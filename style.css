@@ -88,3 +88,8 @@ button:hover {
   background-color: white;
   cursor: pointer;
 }
+
+p {
+  margin: 0;
+  padding: 0;
+}
