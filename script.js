@@ -12,7 +12,7 @@ const add = async () => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${authIdToken}` // Update with actual token retrieval method
         },
-        body: JSON.stringify({ key, data, readable: 'public' }) // Assume public readability for simplicity
+        body: JSON.stringify({ key, data, readable: loggedInUser.email }) // Assume public readability for simplicity
     })
     const respData = await response.json();
     console.log('Success:', respData);
