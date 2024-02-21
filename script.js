@@ -17,15 +17,25 @@ const add = async () => {
     const respData = await response.json();
     console.log('Success:', respData);
 
-    // add to display
-    const dataDisplay = document.getElementById('data-display');
-    const itmeElement = document.createElement('div');
-    itmeElement.textContent = await decrypt(data);
-    // add itemElement to top of dataDisplay
-    dataDisplay.insertBefore(itmeElement, dataDisplay.firstChild);
-} catch(error) {
+    // get date (should be based on data from server, but using client date for simplicity)
+    const today = new Date().toISOString().split('T')[0];
+
+    // add to existing card or create new card
+    const diarySection = document.getElementById('diary-section');
+    let card = document.querySelector(`.card[data-date="${today}"]`);
+    if (!card) {
+      // create new card
+      card = await createCardForDate(today, [{data, created: today}]);
+      diarySection.insertBefore(card, diarySection.firstChild);
+    } else {
+      // add to existing card
+      const itemElement = document.createElement('p');
+      itemElement.textContent = await decrypt(data);;
+      card.insertBefore(itemElement, card.firstChild.nextSibling);
+    }
+  } catch(error) {
     console.error('Error:', error);
-  };
+  }
 };
 
 document.getElementById('add-button').addEventListener('click',async function() {
@@ -44,12 +54,13 @@ document.getElementById('get-button').addEventListener('click', async function()
     const data = await response.json();
     console.log('Success:', data);
 
-    const dataDisplay = document.getElementById('data-display');
-    dataDisplay.innerHTML = '';
-    data.map(async (item) => {
-      const itmeElement = document.createElement('div');
-      itmeElement.textContent = (await decrypt(item.data)) || 'No data found';
-      dataDisplay.appendChild(itmeElement);
+    const groupedByDate = groupDataByDate(data);
+
+    const diarySection = document.getElementById('diary-section');
+    diarySection.innerHTML = '';
+    await Object.keys(groupedByDate).forEach(async (date) => {
+      const card = await createCardForDate(date, groupedByDate[date]);
+      diarySection.appendChild(card);
     });
   } catch(error){
     console.error('Error:', error);
@@ -81,3 +92,36 @@ document.addEventListener('keydown', function(event) {
     add();
   }
 });
+
+function groupDataByDate(data) {
+  const grouped = {};
+  data.forEach(item => {
+    const date = item.created.split('T')[0];
+    if (!grouped[date]) {
+      grouped[date] = [];
+    }
+    grouped[date].push(item);
+  });
+  return grouped;
+}
+
+async function createCardForDate(date, dataItems) {
+  // create a card container
+  const card = document.createElement('div');
+  card.classList.add('card');
+  card.setAttribute('data-date', date);
+
+  // add date title
+  const title = document.createElement('h2');
+  title.textContent = date;
+  card.appendChild(title);
+
+  // add line for each data card
+  dataItems.forEach(async (item) => {
+    const itemElement = document.createElement('p');
+    itemElement.textContent = (await decrypt(item.data)) || 'No data found';
+    card.appendChild(itemElement);
+  });
+
+  return card;
+}

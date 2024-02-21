@@ -9,7 +9,6 @@
 </head>
 <body>
     <div id="app">
-        <h1>日々の一行</h1>
         <div class="button-row">
           <button class="mui-btn mui-btn--raised" onclick="generateKey()">鍵を生成</button>
           <button class="mui-btn mui-btn--raised" onclick="exportKey()">鍵をエクスポート</button>
@@ -26,7 +25,9 @@
           <!-- <button id="delete-button">Delete Line</button> -->
         </div>
         <div id="get-section">
-            <div id="data-display"></div>
+            <div id="diary-section">
+                <!-- ここに日記のカードが動的に挿入されます -->
+            </div>
         </div>
         <div id="delete-section">
         </div>
