@@ -4,7 +4,7 @@
   "start_url": "/kva-DailyLine/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#4A90E2",
+  "theme_color": "#03916d",
   "icons": [
     {
       "src": "icon/daily-line-192.png",

@@ -1,15 +1,15 @@
 body, html {
   font-family: Arial, sans-serif;
   padding: 5px;
-  background-color: #f0f0f0;
+  background-color: #ECEFF1;
 }
 
 #app {
-  background: white;
+  background: #f9f9f9;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  max-width: 600px;
+  max-width: 1000px;
   margin: 10px auto;
 }
 
@@ -22,7 +22,7 @@ input[type="text"] {
 }
 
 button {
-  background-color: #007bff;
+  background-color: #03916d;
   color: white;
   padding: 10px;
   border: none;
@@ -32,14 +32,6 @@ button {
 
 button:hover {
   background-color: #0056b3;
-}
-
-#data-display {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #e9e9e9;
-  border-radius: 4px;
 }
 
 #key-section, #add-section {
@@ -58,8 +50,9 @@ button:hover {
 }
 
 .card {
-  background-color: #f9f9f9;
+  background-color: #fff;
   margin-top: 10px;
+  margin-bottom: 10px;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
