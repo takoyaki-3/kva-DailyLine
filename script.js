@@ -18,7 +18,7 @@ const add = async () => {
     console.log('Success:', respData);
 
     // get date (should be based on data from server, but using client date for simplicity)
-    const today = new Date().toISOString().split('T')[0];
+    const today = getDateInSelectedTimezone(new Date().toISOString());
 
     // add to existing card or create new card
     const diarySection = document.getElementById('diary-section');
@@ -93,10 +93,36 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  // load timezone from local storage
+  const savedTimezone = localStorage.getItem('selectedTimezone');
+  if (savedTimezone) {
+    document.getElementById('timezone').value = savedTimezone;
+  }
+  // get data from server on page load
+  get();
+
+  // save timezone to local storage when selected
+  document.getElementById('timezone').addEventListener('change', function() {
+    const selectedTimezone = document.getElementById('timezone').value;
+    localStorage.setItem('selectedTimezone', selectedTimezone);
+    get();
+  });
+});
+
+function getDateInSelectedTimezone(timestamp) {
+  // load timezone from local storage
+  const selectedTimezone = localStorage.getItem('selectedTimezone') || 'UTC';
+  // convert timestamp to selected timezone
+  const currentDate = moment(timestamp).tz(selectedTimezone);
+  // return date in the format of YYYY-MM-DD
+  return currentDate.format('YYYY-MM-DD');
+}
+
 function groupDataByDate(data) {
   const grouped = {};
   data.forEach(item => {
-    const date = item.created.split('T')[0];
+    const date = getDateInSelectedTimezone(item.created);
     if (!grouped[date]) {
       grouped[date] = [];
     }
@@ -125,6 +151,3 @@ async function createCardForDate(date, dataItems) {
 
   return card;
 }
-
-// get data from server on page load
-get();

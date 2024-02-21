@@ -6,14 +6,23 @@
     <title>日々の一行</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="./manifest.json">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
 </head>
 <body>
     <div id="app">
         <div class="button-row">
-          <button class="mui-btn mui-btn--raised" onclick="generateKey()">鍵を生成</button>
-          <button class="mui-btn mui-btn--raised" onclick="exportKey()">鍵をエクスポート</button>
-          <button class="mui-btn mui-btn--raised" onclick="importKey()">鍵をインポート</button>
-          <div id="output"></div>
+            <button class="mui-btn mui-btn--raised" onclick="generateKey()">鍵を生成</button>
+            <button class="mui-btn mui-btn--raised" onclick="exportKey()">鍵をエクスポート</button>
+            <button class="mui-btn mui-btn--raised" onclick="importKey()">鍵をインポート</button>
+            <label for="timezone" class="timezone-label"></label>
+            <select id="timezone" class="mui-select">
+                <option value="UTC">UTC</option>
+                <option value="America/New_York">America/New_York</option>
+                <option value="Europe/London">Europe/London</option>
+                <option value="Asia/Tokyo">Asia/Tokyo</option>
+            </select>
+            <div id="output"></div>
         </div>
         <div id="key-section">
             <input type="text" id="key" placeholder="key (optional)">
