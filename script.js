@@ -38,11 +38,9 @@ const add = async () => {
   }
 };
 
-document.getElementById('add-button').addEventListener('click',async function() {
-  await add();
-});
+document.getElementById('add-button').addEventListener('click', add);
 
-document.getElementById('get-button').addEventListener('click', async function() {
+const get = async () => {
   try {
     const key = 'privateKey-' + loggedInUser.email + '@' + document.getElementById('key').value;
     const response = await fetch(`${API_ENDPOINT}/?key=${key}`, {
@@ -65,7 +63,9 @@ document.getElementById('get-button').addEventListener('click', async function()
   } catch(error){
     console.error('Error:', error);
   };
-});
+}
+
+document.getElementById('get-button').addEventListener('click', get);
 
 // document.getElementById('delete-button').addEventListener('click',async function() {
 //   try {
@@ -125,3 +125,6 @@ async function createCardForDate(date, dataItems) {
 
   return card;
 }
+
+// get data from server on page load
+get();
